@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data class="MainBinding">
+        <import type="com.jash.databindingdemo.MyComponent"/>
+        <import type="android.view.View"/>
+        <variable
+            name="user"
+            type="com.jash.databindingdemo.User"/>
+        <variable
+            name="list"
+            type="java.util.List&lt;String&gt;"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context="com.jash.databindingdemo.MainActivity">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:imageURL="@{ user.icon }"
+            android:onClick="@{ user.clickIcon}"
+            />
+        <TextView
+            android:text="@{ `姓名:` + (user.name ?? `匿名用户`) }"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{ user.clickName }"
+            android:onLongClick="@{ user.longClickName }"
+            android:textSize="30sp"/>
+        <TextView
+            android:text="@{ @string/emailFormat(user.email) }"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:visibility="@{user.phone == null ? View.GONE : View.VISIBLE }"
+            android:text="@{ user.phone }"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:adapter="@{ user.adapter }"
+            android:onItemClick="@{ user.itemClick }"/>
+    </LinearLayout>
+</layout>
